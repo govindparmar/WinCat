@@ -19,11 +19,10 @@ BOOL WINAPI SaveFileList(
 )
 {
 	OPENFILENAMEW ofn;
-	WCHAR wszFileName[MAX_PATH], *p;
+	WCHAR wszFileName[MAX_PATH] = { 0 }, *p;
 	
 	ZeroMemory(&ofn, sizeof(OPENFILENAMEW));
-	ZeroMemory(wszFileName, MAX_PATH * sizeof(WCHAR));
-
+	
 	p = wszFileName;
 
 	ofn.lStructSize = sizeof(OPENFILENAMEW);
@@ -40,8 +39,7 @@ BOOL WINAPI SaveFileList(
 
 	if (GetSaveFileNameW(&ofn))
 	{
-		WriteFileFromListBox(wszFileName, hListBox);
-		return TRUE;
+		return WriteFileFromListBox(wszFileName, hListBox);
 	}
 
 	else return FALSE;

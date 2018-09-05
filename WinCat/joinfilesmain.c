@@ -22,20 +22,32 @@ BOOL WINAPI JoinFilesMain(
 	_In_reads_or_z_(MAX_PATH) WCHAR *wszOutFile
 )
 {
-	HANDLE hFile, hIN;
-	BYTE bData[100000];
+	HANDLE hFile, hIN, hHeap = GetProcessHeap();
+	//BYTE bData[100000];
+	BYTE *bData = NULL;
 	DWORD dwRead, dwWritten;
 	LONG_PTR lpResult = 0;
 	WPARAM i = 0;
 	WCHAR wszInFile[MAX_PATH];
+	BOOL fRead = FALSE;
+
+	ZeroMemory(wszInFile, MAX_PATH * sizeof(WCHAR));
 
 	hFile = CreateFileW(wszOutFile, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
 		return FALSE;
 
+	bData = (BYTE *)HeapAlloc(hHeap, HEAP_ZERO_MEMORY, 100000);
+	if (!bData)
+	{
+		MessageBoxW(NULL, L"Out of memory", L"Error", MB_OK | MB_ICONSTOP);
+		ExitProcess(ERROR_OUTOFMEMORY);
+	}
+
 	while (1)
 	{
 		lpResult = SendMessageW(hListBox, LB_GETTEXT, i++, (LPARAM)wszInFile);
+		wszInFile[259] = L'\0';
 		if (lpResult == LB_ERR) break;
 		hIN = CreateFileW(wszInFile, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 		if (hIN == INVALID_HANDLE_VALUE)
@@ -48,12 +60,15 @@ BOOL WINAPI JoinFilesMain(
 		do
 		{
 			SetFilePointer(hFile, 0, NULL, FILE_END);
-			ReadFile(hIN, bData, 100000, &dwRead, NULL);
-			WriteFile(hFile, bData, dwRead, &dwWritten, NULL);
+			fRead = ReadFile(hIN, bData, 100000, &dwRead, NULL);
+			if(fRead)
+				WriteFile(hFile, bData, dwRead, &dwWritten, NULL);
 		}
 		while (dwRead != 0);
 		CloseHandle(hIN);
 	}
+	HeapFree(hHeap, 0, bData);
+	bData = NULL;
 	CloseHandle(hFile);
 	return TRUE;
 }

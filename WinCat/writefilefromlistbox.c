@@ -8,7 +8,7 @@
  * RETURNS:
  *  TRUE if successful; FALSE otherwise
  */
-_Pre_satisfies_(hListBox != NULL && wszFileName != NULL && wsclen(wszFileName) <= MAX_PATH)
+_Pre_satisfies_(hListBox != NULL && wszFileName != NULL && wcslen(wszFileName) <= MAX_PATH)
 _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
@@ -23,7 +23,8 @@ BOOL WINAPI WriteFileFromListBox(
 	CONST CHAR *szLF = "\r\n";
 	LONG_PTR lpItems, i;
 	DWORD dwWritten, dwLen;
-	
+	HRESULT hr;
+
 	if (hFile == INVALID_HANDLE_VALUE)
 		return FALSE;
 
@@ -32,7 +33,13 @@ BOOL WINAPI WriteFileFromListBox(
 	for (i = 0; i < lpItems; i++)
 	{
 		SendMessageA(hListBox, LB_GETTEXT, i, (LPARAM)szStr);
-		StringCbLengthA(szStr, MAX_PATH, &dwLen);
+		szStr[MAX_PATH - 1] = '\0';
+		hr = StringCbLengthA(szStr, MAX_PATH, &dwLen);
+		if (FAILED(hr))
+		{
+			// One file in the list had a path > MAX_PATH; we caught it; keep trying...
+			continue;
+		}
 		WriteFile(hFile, szStr, dwLen, &dwWritten, NULL);
 		WriteFile(hFile, szLF, 2, &dwWritten, NULL);
 	}

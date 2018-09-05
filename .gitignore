@@ -3,3 +3,16 @@
 ################################################################################
 
 *.ipch
+*.suo
+*.db
+*.opendb
+*.exe
+*.lastcodeanalysissucceeded
+*.ilk
+*.pdb
+/WinCat/Debug/WinCat.tlog
+/WinCat/Debug
+/WinCat/Release
+/WinCat/x64/Debug/WinCat.tlog
+/WinCat/x64/Debug
+/WinCat/WinCat.vcxproj.user

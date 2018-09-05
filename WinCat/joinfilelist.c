@@ -40,7 +40,10 @@ BOOL WINAPI JoinFileList(
 
 	if (GetSaveFileNameW(&ofn))
 	{
-		JoinFilesMain(hListBox, wszFileName);
+		if (!JoinFilesMain(hListBox, wszFileName))
+		{
+			MessageBoxW(NULL, L"At least one file could not be joined.", L"Warning", MB_OK | MB_ICONWARNING);
+		}
 		return TRUE;
 	}
 	else return FALSE;

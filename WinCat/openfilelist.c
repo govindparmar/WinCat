@@ -40,8 +40,7 @@ BOOL WINAPI OpenFileList(
 
 	if (GetOpenFileNameW(&ofn))
 	{
-		ReadFileIntoListBox(lpFileName, hListBox);
-		return TRUE;
+		return ReadFileIntoListBox(lpFileName, hListBox);
 	}
 
 	else return FALSE;

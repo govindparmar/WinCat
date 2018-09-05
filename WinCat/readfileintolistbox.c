@@ -22,6 +22,7 @@ BOOL WINAPI ReadFileIntoListBox(
 	BYTE *bData = NULL, *pData = NULL;
 	LARGE_INTEGER liSize;
 	DWORD dwRead, i, dwCount = 0;
+	BOOL fRead = FALSE;
 
 	if (hFile == INVALID_HANDLE_VALUE)
 		return FALSE;
@@ -35,7 +36,14 @@ BOOL WINAPI ReadFileIntoListBox(
 	if (bData == NULL) 
 		return FALSE;
 
-	ReadFile(hFile, bData, liSize.LowPart, &dwRead, NULL);
+	fRead = ReadFile(hFile, bData, liSize.LowPart, &dwRead, NULL);
+	if (!fRead)
+	{
+		MessageBoxW(NULL, L"Unable to read the specified file.", L"Error", MB_OK | MB_ICONSTOP);
+		HeapFree(hHeap, 0, bData);
+		bData = NULL;
+		return FALSE;
+	}
 	CloseHandle(hFile);
 
 	pData = bData;
