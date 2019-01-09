@@ -46,5 +46,8 @@ BOOL WINAPI JoinFileList(
 		}
 		return TRUE;
 	}
-	else return FALSE;
+	else
+	{
+		return FALSE;
+	}
 }

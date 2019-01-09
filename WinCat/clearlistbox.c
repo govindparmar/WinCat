@@ -21,7 +21,9 @@ BOOL WINAPI ClearListBox(
 	nEntries = SendMessageW(hListBox, LB_GETCOUNT, 0, 0);
 	
 	if (nEntries == LB_ERR)
+	{
 		return FALSE;
+	}
 
 	while (i < nEntries)
 	{

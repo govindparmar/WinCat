@@ -25,16 +25,22 @@ BOOL WINAPI ReadFileIntoListBox(
 	BOOL fRead = FALSE;
 
 	if (hFile == INVALID_HANDLE_VALUE)
+	{
 		return FALSE;
+	}
 
 	GetFileSizeEx(hFile, &liSize);
 
 	if (liSize.HighPart > 0 || liSize.LowPart & 0x80000000) // too big
+	{
 		return FALSE;
+	}
 
 	bData = (BYTE *)HeapAlloc(hHeap, HEAP_ZERO_MEMORY, liSize.LowPart);
-	if (bData == NULL) 
+	if (bData == NULL)
+	{
 		return FALSE;
+	}
 
 	fRead = ReadFile(hFile, bData, liSize.LowPart, &dwRead, NULL);
 	if (!fRead)
@@ -49,21 +55,27 @@ BOOL WINAPI ReadFileIntoListBox(
 	pData = bData;
 
 	for (i = 0; i < dwRead; i++)
+	{
 		if (pData[i] == '\n')
+		{
 			dwCount++;
-	
-	for(i = 0; i < dwRead; i++)
-		if(pData[i]=='\n')
+		}
+	}
+	for (i = 0; i < dwRead; i++)
+	{
+		if (pData[i] == '\n')
 		{
 			pData[i] = 0;
 			SendMessageA(hListBox, LB_ADDSTRING, 0, (LPARAM)pData);
 			pData += (++i);
 			i = 0;
 			dwCount--;
-			if(dwCount == 0) break;
+			if (dwCount == 0)
+			{
+				break;
+			}
 		}
-	
-			
+	}
 	
 	HeapFree(hHeap, 0, bData);
 	bData = NULL;

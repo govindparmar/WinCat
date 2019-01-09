@@ -8,10 +8,13 @@
 #include <sal.h>
 #include "resource.h"
 
+#ifndef NULL
+#define NULL ((void *)0)
+#endif
+
 #define EXTERN extern
 
 #pragma comment(lib, "comctl32.lib")
-
 #if defined _M_IX86
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='x86' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #elif defined _M_IA64
@@ -23,6 +26,7 @@
 #endif
 
 EXTERN CONST WCHAR g_wszClassName[];
+EXTERN CONST SIZE_T cbCopyTime;
 
 _Pre_satisfies_(hWnd != NULL && hListBox != NULL)
 _Success_(return == TRUE)
@@ -86,6 +90,7 @@ VOID WINAPI OnCommand(
 	_In_ UINT uNotify
 );
 
+_Success_(return == TRUE)
 BOOL WINAPI OnCreate(
 	_In_ HWND hWnd,
 	_In_ LPCREATESTRUCTW lpCreateStruct
@@ -121,7 +126,7 @@ _Ret_range_(0, USHRT_MAX)
 _Check_return_
 _Must_inspect_result_
 ATOM WINAPI RegisterWCEX(
-	_In_ HINSTANCE hInstance
+	_In_ _Notnull_ HINSTANCE hInstance
 );
 
 _Pre_satisfies_(hListBox != NULL)
@@ -131,6 +136,11 @@ _Check_return_
 _Must_inspect_result_
 BOOL WINAPI RemoveFileList(
 	_In_ HWND hListBox
+);
+
+VOID WINAPI ReportError(
+	_In_ DWORD dwError,
+	_In_ BOOL fRecoverable
 );
 
 _Pre_satisfies_(hWnd != NULL && hListBox != NULL)

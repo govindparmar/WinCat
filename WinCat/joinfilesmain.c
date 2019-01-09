@@ -1,5 +1,7 @@
 #include "WC.h"
 
+CONST SIZE_T cbCopyTime = 100000;
+
 /**
  * Inner function for joining files together.
  * Goes through each of the files in the list box,
@@ -35,9 +37,11 @@ BOOL WINAPI JoinFilesMain(
 
 	hFile = CreateFileW(wszOutFile, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
+	{
 		return FALSE;
+	}
 
-	bData = (BYTE *)HeapAlloc(hHeap, HEAP_ZERO_MEMORY, 100000);
+	bData = (BYTE *)HeapAlloc(hHeap, HEAP_ZERO_MEMORY, cbCopyTime);
 	if (!bData)
 	{
 		MessageBoxW(NULL, L"Out of memory", L"Error", MB_OK | MB_ICONSTOP);
@@ -48,7 +52,10 @@ BOOL WINAPI JoinFilesMain(
 	{
 		lpResult = SendMessageW(hListBox, LB_GETTEXT, i++, (LPARAM)wszInFile);
 		wszInFile[259] = L'\0';
-		if (lpResult == LB_ERR) break;
+		if (lpResult == LB_ERR)
+		{
+			break;
+		}
 		hIN = CreateFileW(wszInFile, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 		if (hIN == INVALID_HANDLE_VALUE)
 		{
@@ -60,13 +67,16 @@ BOOL WINAPI JoinFilesMain(
 		do
 		{
 			SetFilePointer(hFile, 0, NULL, FILE_END);
-			fRead = ReadFile(hIN, bData, 100000, &dwRead, NULL);
-			if(fRead)
+			fRead = ReadFile(hIN, bData, cbCopyTime, &dwRead, NULL);
+			if (fRead)
+			{
 				WriteFile(hFile, bData, dwRead, &dwWritten, NULL);
+			}
 		}
 		while (dwRead != 0);
 		CloseHandle(hIN);
 	}
+
 	HeapFree(hHeap, 0, bData);
 	bData = NULL;
 	CloseHandle(hFile);

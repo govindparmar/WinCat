@@ -17,11 +17,17 @@ _Ret_range_(0, USHRT_MAX)
 _Check_return_
 _Must_inspect_result_
 ATOM WINAPI RegisterWCEX(
-	_In_ HINSTANCE hInstance
+	_In_ _Notnull_ HINSTANCE hInstance
 )
 {
 	WNDCLASSEXW wcex;
 	ZeroMemory(&wcex, sizeof(WNDCLASSEXW));
+
+	if (hInstance == NULL)
+	{
+		SetLastError(ERROR_BAD_ARGUMENTS);
+		return (ATOM)0;
+	}
 
 	wcex.cbSize = sizeof(WNDCLASSEXW);
 	wcex.hbrBackground = (HBRUSH)COLOR_WINDOW;

@@ -27,7 +27,9 @@ INT_PTR CALLBACK DialogProc(
 		return (INT_PTR)TRUE;
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDB_OK)
+		{
 			EndDialog(hDlg, (INT_PTR)0);
+		}
 	}
 	return (INT_PTR)FALSE;
 }

@@ -26,7 +26,9 @@ BOOL WINAPI WriteFileFromListBox(
 	HRESULT hr;
 
 	if (hFile == INVALID_HANDLE_VALUE)
+	{
 		return FALSE;
+	}
 
 	lpItems = SendMessageW(hListBox, LB_GETCOUNT, 0, 0);
 

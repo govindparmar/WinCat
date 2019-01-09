@@ -157,6 +157,7 @@
     <ClCompile Include="readfileintolistbox.c" />
     <ClCompile Include="registerwcex.c" />
     <ClCompile Include="removefilelist.c" />
+    <ClCompile Include="reporterror.c" />
     <ClCompile Include="savefilelist.c" />
     <ClCompile Include="windowproc.c" />
     <ClCompile Include="writefilefromlistbox.c" />
