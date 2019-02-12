@@ -21,21 +21,22 @@ INT APIENTRY wWinMain(
 	MSG Msg;
 	NONCLIENTMETRICSW ncm;
 	HFONT hfDefault;
-	BOOL fResult;
 	DWORD dwError;
-	CONST DWORD dwFlags = FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, dwLang = MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT);
-	LPWSTR lpMsgBuf;
-	POINTS p0;
 
 	ZeroMemory(&ncm, sizeof(NONCLIENTMETRICSW));
 	ncm.cbSize = sizeof(NONCLIENTMETRICSW);
 
-	fResult = SystemParametersInfoW(SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0);
-	if (fResult == FALSE)
+	if (SystemParametersInfoW(
+		SPI_GETNONCLIENTMETRICS, 
+		ncm.cbSize, 
+		&ncm, 
+		0
+	) == FALSE)
 	{
 		dwError = GetLastError();
 		ReportError(dwError, FALSE);
 	}
+
 	hfDefault = CreateFontIndirectW(&ncm.lfMessageFont);
 
 	if (RegisterWCEX(hInstance) == (ATOM)0)
@@ -44,8 +45,20 @@ INT APIENTRY wWinMain(
 		ReportError(dwError, FALSE);
 	}
 
-	hWnd = CreateWindowExW(WS_EX_OVERLAPPEDWINDOW, g_wszClassName, L"WinCat by Govind Parmar", WS_VISIBLE | WS_SYSMENU, 100, 100, 600, 530, NULL, NULL, hInstance, NULL);
-
+	hWnd = CreateWindowExW(
+		WS_EX_OVERLAPPEDWINDOW, 
+		g_wszClassName, 
+		L"WinCat by Govind Parmar", 
+		WS_VISIBLE | WS_SYSMENU, 
+		100, 
+		100, 
+		600, 
+		530, 
+		NULL, 
+		NULL, 
+		hInstance, 
+		NULL
+	);
 	if (!hWnd)
 	{
 		dwError = GetLastError();

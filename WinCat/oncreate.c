@@ -24,7 +24,7 @@ BOOL WINAPI OnCreate(
 	iccx.dwICC = ICC_STANDARD_CLASSES;
 	iccx.dwSize = sizeof(INITCOMMONCONTROLSEX);
 	
-	if (!InitCommonControlsEx(&iccx))
+	if (!InitCommonControlsEx(&iccx)) 
 	{
 		return FALSE;
 	}

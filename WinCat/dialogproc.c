@@ -22,7 +22,9 @@ INT_PTR CALLBACK DialogProc(
 	{
 	case WM_CLOSE:
 	case WM_DESTROY:
+	{	
 		EndDialog(hDlg, (INT_PTR)0);
+	}
 	case WM_INITDIALOG:
 		return (INT_PTR)TRUE;
 	case WM_COMMAND:
@@ -31,5 +33,5 @@ INT_PTR CALLBACK DialogProc(
 			EndDialog(hDlg, (INT_PTR)0);
 		}
 	}
-	return (INT_PTR)FALSE;
+	return (INT_PTR)0;
 }

@@ -18,7 +18,16 @@ BOOL WINAPI ReadFileIntoListBox(
 	_In_ HWND hListBox
 )
 {
-	HANDLE hFile = CreateFileW(wszFileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL), hHeap = GetProcessHeap();
+	CONST HANDLE hHeap = GetProcessHeap();
+	HANDLE hFile = CreateFileW(
+		wszFileName,
+		GENERIC_READ,
+		0,
+		NULL,
+		OPEN_EXISTING,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL
+	);
 	BYTE *bData = NULL, *pData = NULL;
 	LARGE_INTEGER liSize;
 	DWORD dwRead, i, dwCount = 0;
@@ -37,13 +46,13 @@ BOOL WINAPI ReadFileIntoListBox(
 	}
 
 	bData = (BYTE *)HeapAlloc(hHeap, HEAP_ZERO_MEMORY, liSize.LowPart);
-	if (bData == NULL)
+	if (NULL == bData)
 	{
 		return FALSE;
 	}
 
 	fRead = ReadFile(hFile, bData, liSize.LowPart, &dwRead, NULL);
-	if (!fRead)
+	if (FALSE == fRead)
 	{
 		MessageBoxW(NULL, L"Unable to read the specified file.", L"Error", MB_OK | MB_ICONSTOP);
 		HeapFree(hHeap, 0, bData);

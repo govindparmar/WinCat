@@ -138,9 +138,10 @@ BOOL WINAPI RemoveFileList(
 	_In_ HWND hListBox
 );
 
+DECLSPEC_NORETURN
 VOID WINAPI ReportError(
 	_In_ DWORD dwError,
-	_In_ BOOL fRecoverable
+	_In_range_(FALSE, TRUE) BOOL fRecoverable
 );
 
 _Pre_satisfies_(hWnd != NULL && hListBox != NULL)
