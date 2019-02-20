@@ -26,15 +26,13 @@ INT APIENTRY wWinMain(
 	ZeroMemory(&ncm, sizeof(NONCLIENTMETRICSW));
 	ncm.cbSize = sizeof(NONCLIENTMETRICSW);
 
-	if (SystemParametersInfoW(
-		SPI_GETNONCLIENTMETRICS, 
-		ncm.cbSize, 
-		&ncm, 
-		0
-	) == FALSE)
+	if (SystemParametersInfoW(SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0) == FALSE)
 	{
 		dwError = GetLastError();
-		ReportError(dwError, FALSE);
+		ReportError(
+			dwError, 
+			FALSE
+		);
 	}
 
 	hfDefault = CreateFontIndirectW(&ncm.lfMessageFont);
@@ -46,18 +44,10 @@ INT APIENTRY wWinMain(
 	}
 
 	hWnd = CreateWindowExW(
-		WS_EX_OVERLAPPEDWINDOW, 
-		g_wszClassName, 
-		L"WinCat by Govind Parmar", 
-		WS_VISIBLE | WS_SYSMENU, 
-		100, 
-		100, 
-		600, 
-		530, 
-		NULL, 
-		NULL, 
-		hInstance, 
-		NULL
+		WS_EX_OVERLAPPEDWINDOW, g_wszClassName, 
+		L"WinCat by Govind Parmar", WS_VISIBLE | WS_SYSMENU, 
+		100, 100, 600, 530, 
+		NULL, NULL, hInstance, NULL
 	);
 	if (!hWnd)
 	{
@@ -67,7 +57,9 @@ INT APIENTRY wWinMain(
 
 	ShowWindow(hWnd, SW_SHOW);
 	EnumChildWindows(hWnd, EnumChildProc, (LPARAM)&hfDefault);
-	UpdateWindow(hWnd);
+	UpdateWindow(
+		hWnd
+	);
 
 	while (GetMessageW(&Msg, NULL, 0, 0) > 0)
 	{

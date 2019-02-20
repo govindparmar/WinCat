@@ -153,6 +153,7 @@
     <ClCompile Include="oncommand.c" />
     <ClCompile Include="oncreate.c" />
     <ClCompile Include="ondestroy.c" />
+    <ClCompile Include="onpaint.c" />
     <ClCompile Include="openfilelist.c" />
     <ClCompile Include="readfileintolistbox.c" />
     <ClCompile Include="registerwcex.c" />

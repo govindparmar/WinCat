@@ -23,6 +23,7 @@ LRESULT CALLBACK WindowProc(
 		HANDLE_MSG(hWnd, WM_COMMAND, OnCommand);
 		HANDLE_MSG(hWnd, WM_CREATE, OnCreate);
 		HANDLE_MSG(hWnd, WM_DESTROY, OnDestroy);
+		HANDLE_MSG(hWnd, WM_PAINT, OnPaint);
 	default:
 		return DefWindowProcW(hWnd, Msg, wParam, lParam);
 	}

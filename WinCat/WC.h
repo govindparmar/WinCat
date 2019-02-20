@@ -100,6 +100,10 @@ VOID WINAPI OnDestroy(
 	_In_ HWND hWnd
 );
 
+VOID WINAPI OnPaint(
+	_In_ HWND hWnd
+);
+
 _Pre_satisfies_(hWnd != NULL && hListBox != NULL)
 _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)

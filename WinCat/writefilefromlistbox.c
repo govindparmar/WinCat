@@ -18,7 +18,12 @@ BOOL WINAPI WriteFileFromListBox(
 	_In_ HWND hListBox
 )
 {
-	HANDLE hFile = CreateFileW(wszFileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFileW(
+		wszFileName, 
+		GENERIC_READ | GENERIC_WRITE,
+		0, 	NULL, CREATE_NEW, 
+		FILE_ATTRIBUTE_NORMAL, NULL
+	);
 	CHAR szStr[MAX_PATH];
 	CONST CHAR *szLF = "\r\n";
 	LONG_PTR lpItems, i;
@@ -34,7 +39,8 @@ BOOL WINAPI WriteFileFromListBox(
 
 	for (i = 0; i < lpItems; i++)
 	{
-		SendMessageA(hListBox, LB_GETTEXT, i, (LPARAM)szStr);
+		// Since the values of the list box are loaded with file paths, MAX_PATH is the most sensible limit
+		SendMessageA(hListBox, LB_GETTEXT,	i, (LPARAM)szStr);
 		szStr[MAX_PATH - 1] = '\0';
 		hr = StringCbLengthA(szStr, MAX_PATH, &dwLen);
 		if (FAILED(hr))
@@ -46,7 +52,9 @@ BOOL WINAPI WriteFileFromListBox(
 		WriteFile(hFile, szLF, 2, &dwWritten, NULL);
 	}
 
-	CloseHandle(hFile);
+	CloseHandle(
+		hFile
+	);
 
 	return TRUE;
 }
