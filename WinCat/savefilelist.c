@@ -29,7 +29,7 @@ BOOL WINAPI SaveFileList(
 	ofn.hwndOwner = hWnd;
 	ofn.lpstrFile = p;
 	ofn.nMaxFile = MAX_PATH;
-	ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_ENABLEHOOK;
+	ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT;
 	ofn.lpstrDefExt = L"wcl";
 	ofn.lpstrFilter = L"WinCat File Lists (*.wcl)\0*.WCL\0\0";
 	ofn.nFilterIndex = 1;
