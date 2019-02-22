@@ -16,6 +16,7 @@ _Success_(return > 0)
 _Ret_range_(0, USHRT_MAX)
 _Check_return_
 _Must_inspect_result_
+
 ATOM WINAPI RegisterWCEX(
 	_In_ _Notnull_ HINSTANCE hInstance
 )

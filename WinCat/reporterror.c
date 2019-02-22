@@ -1,6 +1,7 @@
 #include "WC.h"
 
-DECLSPEC_NORETURN
+_Analysis_noreturn_
+
 VOID WINAPI ReportError(
 	_In_ DWORD dwError,
 	_In_range_(FALSE, TRUE) BOOL fRecoverable
@@ -30,7 +31,7 @@ VOID WINAPI ReportError(
 	);
 	lpMsgBuf = NULL;
 
-	if (fRecoverable == FALSE)
+	if (FALSE == fRecoverable)
 	{
 		ExitProcess(
 			dwError

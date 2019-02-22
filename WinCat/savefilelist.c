@@ -13,6 +13,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI SaveFileList(
 	_In_ HWND hWnd, 
 	_In_ HWND hListBox
@@ -41,6 +42,8 @@ BOOL WINAPI SaveFileList(
 	{
 		return WriteFileFromListBox(wszFileName, hListBox);
 	}
-
-	else return FALSE;
+	else
+	{
+		return FALSE;
+	}
 }

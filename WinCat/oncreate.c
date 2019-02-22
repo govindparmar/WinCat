@@ -12,6 +12,7 @@
  *  TRUE if successful; FALSE otherwise
  */
 _Success_(return == TRUE)
+
 BOOL WINAPI OnCreate(
 	_In_ HWND hWnd, 
 	_In_ LPCREATESTRUCTW lpCreateStruct

@@ -13,6 +13,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI WriteFileFromListBox(
 	_In_reads_or_z_(MAX_PATH) WCHAR *wszFileName, 
 	_In_ HWND hListBox

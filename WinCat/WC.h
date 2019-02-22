@@ -33,6 +33,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI AddFileList(
 	_In_ HWND hWnd,
 	_In_ HWND hListBox
@@ -43,6 +44,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI ClearListBox(
 	_In_ HWND hListBox
 );
@@ -64,6 +66,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI JoinFileList(
 	_In_ HWND hWnd,
 	_In_ HWND hListBox
@@ -74,6 +77,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI JoinFilesMain(
 	_In_ HWND hListBox,
 	_In_reads_or_z_(MAX_PATH) WCHAR *wszOutFile
@@ -91,6 +95,7 @@ VOID WINAPI OnCommand(
 );
 
 _Success_(return == TRUE)
+
 BOOL WINAPI OnCreate(
 	_In_ HWND hWnd,
 	_In_ LPCREATESTRUCTW lpCreateStruct
@@ -109,6 +114,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI OpenFileList(
 	_In_ HWND hWnd,
 	_In_ HWND hListBox
@@ -119,6 +125,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI ReadFileIntoListBox(
 	_In_reads_or_z_(MAX_PATH) WCHAR *wszFileName,
 	_In_ HWND hListBox
@@ -129,6 +136,7 @@ _Success_(return > 0)
 _Ret_range_(0, USHRT_MAX)
 _Check_return_
 _Must_inspect_result_
+
 ATOM WINAPI RegisterWCEX(
 	_In_ _Notnull_ HINSTANCE hInstance
 );
@@ -138,11 +146,13 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI RemoveFileList(
 	_In_ HWND hListBox
 );
 
-DECLSPEC_NORETURN
+_Analysis_noreturn_
+
 VOID WINAPI ReportError(
 	_In_ DWORD dwError,
 	_In_range_(FALSE, TRUE) BOOL fRecoverable
@@ -153,6 +163,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI SaveFileList(
 	_In_ HWND hWnd,
 	_In_ HWND hListBox
@@ -170,6 +181,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI WriteFileFromListBox(
 	_In_reads_or_z_(MAX_PATH) WCHAR *wszFileName,
 	_In_ HWND hListBox

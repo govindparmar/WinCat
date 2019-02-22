@@ -12,6 +12,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI RemoveFileList(
 	_In_ HWND hListBox
 )

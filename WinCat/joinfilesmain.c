@@ -19,6 +19,7 @@ _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
 _Check_return_
 _Must_inspect_result_
+
 BOOL WINAPI JoinFilesMain(
 	_In_ HWND hListBox, 
 	_In_reads_or_z_(MAX_PATH) WCHAR *wszOutFile
