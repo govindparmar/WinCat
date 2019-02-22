@@ -8,10 +8,6 @@
 #include <sal.h>
 #include "resource.h"
 
-#ifndef NULL
-#define NULL ((void *)0)
-#endif
-
 #define EXTERN extern
 
 #pragma comment(lib, "comctl32.lib")
