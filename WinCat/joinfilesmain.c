@@ -26,7 +26,6 @@ BOOL WINAPI JoinFilesMain(
 )
 {
 	HANDLE hFile, hIN, hHeap = GetProcessHeap();
-	//BYTE bData[100000];
 	BYTE *bData = NULL;
 	DWORD dwRead, dwWritten;
 	LONG_PTR lpResult = 0;
@@ -71,15 +70,17 @@ BOOL WINAPI JoinFilesMain(
 			fRead = ReadFile(hIN, bData, cbCopyTime, &dwRead, NULL);
 			if (fRead)
 			{
-				WriteFile(hFile, bData, dwRead, &dwWritten, NULL);
+				(VOID) WriteFile(hFile, bData, dwRead, &dwWritten, NULL);
 			}
 		}
 		while (dwRead != 0);
 		CloseHandle(hIN);
 	}
 
+	CloseHandle(hFile);
+
 	HeapFree(hHeap, 0, bData);
 	bData = NULL;
-	CloseHandle(hFile);
+	
 	return TRUE;
 }
