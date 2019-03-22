@@ -24,7 +24,7 @@ BOOL WINAPI RemoveFileList(
 	}
 	else
 	{
-		SendMessageW(hListBox, LB_DELETESTRING, wSel, 0);
+		(VOID) SendMessageW(hListBox, LB_DELETESTRING, wSel, 0);
 	}
 	return TRUE;
 }

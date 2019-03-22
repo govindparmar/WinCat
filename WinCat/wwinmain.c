@@ -29,10 +29,7 @@ INT APIENTRY wWinMain(
 	if (SystemParametersInfoW(SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0) == FALSE)
 	{
 		dwError = GetLastError();
-		ReportError(
-			dwError, 
-			FALSE
-		);
+		ReportError(dwError, FALSE);
 	}
 
 	hfDefault = CreateFontIndirectW(&ncm.lfMessageFont);
@@ -55,14 +52,14 @@ INT APIENTRY wWinMain(
 		ReportError(dwError, FALSE);
 	}
 
-	ShowWindow(hWnd, SW_SHOW);
-	EnumChildWindows(hWnd, EnumChildProc, (LPARAM)&hfDefault);
-	UpdateWindow(hWnd);
+	(VOID) ShowWindow(hWnd, SW_SHOW);
+	(VOID) EnumChildWindows(hWnd, EnumChildProc, (LPARAM)&hfDefault);
+	(VOID) UpdateWindow(hWnd);
 
 	while (GetMessageW(&Msg, NULL, 0, 0) > 0)
 	{
-		TranslateMessage(&Msg);
-		DispatchMessageW(&Msg);
+		(VOID) TranslateMessage(&Msg);
+		(VOID) DispatchMessageW(&Msg);
 	}
 	
 	return (INT) Msg.wParam;

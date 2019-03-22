@@ -41,7 +41,7 @@ BOOL WINAPI WriteFileFromListBox(
 	for (i = 0; i < lpItems; i++)
 	{
 		// Since the values of the list box are loaded with file paths, MAX_PATH is the most sensible limit
-		SendMessageA(hListBox, LB_GETTEXT,	i, (LPARAM)szStr);
+		(VOID) SendMessageA(hListBox, LB_GETTEXT,	i, (LPARAM)szStr);
 		szStr[MAX_PATH - 1] = '\0';
 		hr = StringCbLengthA(szStr, MAX_PATH, &dwLen);
 		if (FAILED(hr))
@@ -49,11 +49,11 @@ BOOL WINAPI WriteFileFromListBox(
 			// One file in the list had a path > MAX_PATH; we caught it; keep trying...
 			continue;
 		}
-		WriteFile(hFile, szStr, dwLen, &dwWritten, NULL);
-		WriteFile(hFile, szLF, 2, &dwWritten, NULL);
+		(VOID) WriteFile(hFile, szStr, dwLen, &dwWritten, NULL);
+		(VOID) WriteFile(hFile, szLF, 2, &dwWritten, NULL);
 	}
 
-	CloseHandle(hFile);
+	(VOID) CloseHandle(hFile);
 
 	return TRUE;
 }

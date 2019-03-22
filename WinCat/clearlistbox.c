@@ -32,7 +32,7 @@ BOOL WINAPI ClearListBox(
 		//  once an item is removed from the list, 
 		//  the 0-index becomes the next topmost item
 		//  in the list box.
-		SendMessageW(hListBox, LB_DELETESTRING, 0, 0);
+		(VOID) SendMessageW(hListBox, LB_DELETESTRING, 0, 0);
 		i++;
 	}
 	

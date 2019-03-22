@@ -35,5 +35,5 @@ BOOL WINAPI OnCreate(
 		10, 10, 560, 460, 
 		hWnd, NULL, hInstance, NULL);
 	
-	return (hLbxEntries != INVALID_HANDLE_VALUE);
+	return (hLbxEntries != NULL);
 }

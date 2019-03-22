@@ -23,14 +23,14 @@ INT_PTR CALLBACK DialogProc(
 	case WM_CLOSE:
 	case WM_DESTROY:
 	{	
-		EndDialog(hDlg, (INT_PTR)0);
+		(VOID) EndDialog(hDlg, (INT_PTR)0);
 	}
 	case WM_INITDIALOG:
 		return (INT_PTR)TRUE;
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDB_OK)
 		{
-			EndDialog(hDlg, (INT_PTR)0);
+			(VOID) EndDialog(hDlg, (INT_PTR)0);
 		}
 	}
 	return (INT_PTR)0;

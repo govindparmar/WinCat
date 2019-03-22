@@ -35,33 +35,51 @@ BOOL WINAPI JoinFilesMain(
 
 	ZeroMemory(wszInFile, MAX_PATH * sizeof(WCHAR));
 
-	hFile = CreateFileW(wszOutFile, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
-	if (hFile == INVALID_HANDLE_VALUE)
+	hFile = CreateFileW(
+		wszOutFile, 
+		GENERIC_READ | GENERIC_WRITE, 
+		0, 
+		NULL, 
+		CREATE_NEW, 
+		FILE_ATTRIBUTE_NORMAL, 
+		NULL
+	);
+
+	if (INVALID_HANDLE_VALUE == hFile)
 	{
 		return FALSE;
 	}
 
 	bData = (BYTE *)HeapAlloc(hHeap, HEAP_ZERO_MEMORY, cbCopyTime);
-	if (!bData)
+	if (NULL == bData)
 	{
-		MessageBoxW(NULL, L"Out of memory", L"Error", MB_OK | MB_ICONSTOP);
+		(VOID) MessageBoxW(NULL, L"Out of memory", L"Error", MB_OK | MB_ICONSTOP);
 		ExitProcess(ERROR_OUTOFMEMORY);
 	}
 
-	while (1)
+	while (TRUE)
 	{
 		lpResult = SendMessageW(hListBox, LB_GETTEXT, i++, (LPARAM)wszInFile);
 		wszInFile[259] = L'\0';
-		if (lpResult == LB_ERR)
+		if (LB_ERR == lpResult)
 		{
 			break;
 		}
-		hIN = CreateFileW(wszInFile, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+		hIN = CreateFileW(
+			wszInFile,
+			GENERIC_READ, 
+			0, 
+			NULL,
+			OPEN_EXISTING,
+			FILE_ATTRIBUTE_NORMAL,
+			NULL
+		);
+		
 		if (hIN == INVALID_HANDLE_VALUE)
 		{
 			WCHAR wMsg[512];
-			StringCchPrintfW(wMsg, 512, L"Unable to open the file: %s.\n", wszInFile);
-			MessageBoxW(0, wMsg, L"WinCat", MB_OK | MB_ICONWARNING);
+			(VOID) StringCchPrintfW(wMsg, 512, L"Unable to open the file: %s.\n", wszInFile);
+			(VOID) MessageBoxW(0, wMsg, L"WinCat", MB_OK | MB_ICONWARNING);
 			return FALSE;
 		}
 		do
@@ -74,12 +92,12 @@ BOOL WINAPI JoinFilesMain(
 			}
 		}
 		while (dwRead != 0);
-		CloseHandle(hIN);
+		(VOID) CloseHandle(hIN);
 	}
 
-	CloseHandle(hFile);
+	(VOID) CloseHandle(hFile);
+	(VOID) HeapFree(hHeap, 0, bData);
 
-	HeapFree(hHeap, 0, bData);
 	bData = NULL;
 	
 	return TRUE;

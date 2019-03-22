@@ -20,49 +20,85 @@ VOID WINAPI OnCommand(
 {
 	HWND hLbxEntries = FindWindowExW(hWnd, NULL, L"ListBox", NULL);
 	HINSTANCE hInstance = GetModuleHandleW(NULL);
+
 	switch (nID)
 	{
 	case ID_FILE_NEW:
 		if (!ClearListBox(hLbxEntries))
 		{
-			MessageBoxW(NULL, L"Unable to clear the list box.", L"Error", MB_OK | MB_ICONSTOP);
+			(VOID) MessageBoxW(
+				NULL,
+				L"Unable to clear the list box.",
+				L"Error",
+				MB_OK | MB_ICONSTOP
+			);
 		}
 		break;
 	case ID_FILE_OPEN:
 		if (!OpenFileList(hWnd, hLbxEntries))
 		{
-			MessageBoxW(NULL, L"Could not open the specified file.", L"Error", MB_OK | MB_ICONSTOP);
+			(VOID) MessageBoxW(
+				NULL,
+				L"Could not open the specified file.",
+				L"Error",
+				MB_OK | MB_ICONSTOP
+			);
 		}
 		break;
 	case ID_FILE_SAVE:
 		if (!SaveFileList(hWnd, hLbxEntries))
 		{
-			MessageBoxW(NULL, L"Unable to save the current list.", L"Error", MB_OK | MB_ICONSTOP);
+			(VOID) MessageBoxW(
+				NULL,
+				L"Unable to save the current list.",
+				L"Error",
+				MB_OK | MB_ICONSTOP
+			);
 		}
 		break;
 	case ID_FILE_EXIT:
-		SendMessageW(hWnd, WM_CLOSE, 0, 0);
+		(VOID) SendMessageW(hWnd, WM_CLOSE, 0, 0);
 		break;
 	case ID_EDIT_ADDITEM:
 		if (!AddFileList(hWnd, hLbxEntries))
 		{
-			MessageBoxW(NULL, L"Could not add that item to the list.", L"Error", MB_OK | MB_ICONSTOP);
+			(VOID) MessageBoxW(
+				NULL, 
+				L"Could not add that item to the list.",
+				L"Error",
+				MB_OK | MB_ICONSTOP
+			);
 		}
 		break;
 	case ID_EDIT_REMOVEITEM:
-		if (RemoveFileList(hLbxEntries) == FALSE)
+		if (!RemoveFileList(hLbxEntries))
 		{
-			MessageBoxW(0, L"Please highlight the item you want removed from the list.", L"WinCat", MB_OK | MB_ICONWARNING);
+			(VOID) MessageBoxW(
+				NULL, 
+				L"Please highlight the item you want removed from the list.",
+				L"WinCat",
+				MB_OK | MB_ICONWARNING
+			);
 		}
 		break;
 	case ID_EDIT_JOINITEMS:
 		if (!JoinFileList(hWnd, hLbxEntries))
 		{
-			MessageBoxW(NULL, L"Could not join the files together.", L"Error", MB_OK | MB_ICONSTOP);
+			(VOID) MessageBoxW(
+				NULL, 
+				L"Could not join the files together.", 
+				L"Error",
+				MB_OK | MB_ICONSTOP
+			);
 		}
 		break;
 	case ID_HELP_ABOUT40006:
-		DialogBoxW(hInstance, MAKEINTRESOURCEW(IDD_ABOUT), hWnd, DialogProc);
+		(VOID) DialogBoxW(
+			hInstance, 
+			MAKEINTRESOURCEW(IDD_ABOUT),
+			hWnd, 
+			DialogProc
+		);
 		break;
 	}
 }

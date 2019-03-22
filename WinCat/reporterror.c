@@ -19,22 +19,13 @@ VOID WINAPI ReportError(
 		NULL
 	);
 
-	(VOID) MessageBoxW(
-		NULL, 
-		lpMsgBuf, 
-		L"Error", 
-		MB_OK | MB_ICONSTOP
-	);
+	(VOID) MessageBoxW(NULL, lpMsgBuf, L"Error", MB_OK | MB_ICONSTOP);
 
-	LocalFree(
-		(HLOCAL)lpMsgBuf
-	);
+	(VOID) LocalFree((HLOCAL)lpMsgBuf);
 	lpMsgBuf = NULL;
 
 	if (FALSE == fRecoverable)
 	{
-		ExitProcess(
-			dwError
-		);
+		ExitProcess(dwError);
 	}
 }

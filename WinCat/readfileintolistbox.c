@@ -39,7 +39,7 @@ BOOL WINAPI ReadFileIntoListBox(
 		return FALSE;
 	}
 
-	GetFileSizeEx(hFile, &liSize);
+	(VOID) GetFileSizeEx(hFile, &liSize);
 
 	if (liSize.HighPart > 0 || liSize.LowPart & 0x80000000) // too big
 	{
@@ -55,12 +55,17 @@ BOOL WINAPI ReadFileIntoListBox(
 	fRead = ReadFile(hFile, bData, liSize.LowPart, &dwRead, NULL);
 	if (FALSE == fRead)
 	{
-		MessageBoxW(NULL, L"Unable to read the specified file.", L"Error", MB_OK | MB_ICONSTOP);
-		HeapFree(hHeap, 0, bData);
+		(VOID) MessageBoxW(
+			NULL, 
+			L"Unable to read the specified file.", 
+			L"Error",
+			MB_OK | MB_ICONSTOP
+		);
+		(VOID) HeapFree(hHeap, 0, bData);
 		bData = NULL;
 		return FALSE;
 	}
-	CloseHandle(hFile);
+	(VOID) CloseHandle(hFile);
 
 	pData = bData;
 
@@ -76,7 +81,7 @@ BOOL WINAPI ReadFileIntoListBox(
 		if (pData[i] == '\n')
 		{
 			pData[i] = 0;
-			SendMessageA(hListBox, LB_ADDSTRING, 0, (LPARAM)pData);
+			(VOID) SendMessageA(hListBox, LB_ADDSTRING, 0, (LPARAM)pData);
 			pData += (++i);
 			i = 0;
 			dwCount--;
@@ -87,7 +92,7 @@ BOOL WINAPI ReadFileIntoListBox(
 		}
 	}
 	
-	HeapFree(hHeap, 0, bData);
+	(VOID) HeapFree(hHeap, 0, bData);
 	bData = NULL;
 	pData = NULL;
 	return TRUE;
