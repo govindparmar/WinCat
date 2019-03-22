@@ -49,7 +49,7 @@ INT APIENTRY wWinMain(
 		100, 100, 600, 530, 
 		NULL, NULL, hInstance, NULL
 	);
-	if (!hWnd)
+	if (NULL == hWnd)
 	{
 		dwError = GetLastError();
 		ReportError(dwError, FALSE);
@@ -57,9 +57,7 @@ INT APIENTRY wWinMain(
 
 	ShowWindow(hWnd, SW_SHOW);
 	EnumChildWindows(hWnd, EnumChildProc, (LPARAM)&hfDefault);
-	UpdateWindow(
-		hWnd
-	);
+	UpdateWindow(hWnd);
 
 	while (GetMessageW(&Msg, NULL, 0, 0) > 0)
 	{

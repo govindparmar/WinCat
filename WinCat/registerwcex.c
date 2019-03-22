@@ -24,7 +24,7 @@ ATOM WINAPI RegisterWCEX(
 	WNDCLASSEXW wcex;
 	ZeroMemory(&wcex, sizeof(WNDCLASSEXW));
 
-	if (hInstance == NULL)
+	if (NULL == hInstance)
 	{
 		SetLastError(ERROR_BAD_ARGUMENTS);
 		return (ATOM)0;

@@ -44,5 +44,8 @@ BOOL WINAPI AddFileList(
 		return TRUE;
 	}
 
-	else return FALSE;
+	else
+	{
+		return FALSE;
+	}
 }

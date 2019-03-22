@@ -18,7 +18,7 @@ BOOL WINAPI RemoveFileList(
 )
 {
 	WPARAM wSel = SendMessageW(hListBox, LB_GETCURSEL, 0, 0);
-	if (wSel == LB_ERR) 
+	if (LB_ERR == wSel) 
 	{
 		return FALSE;
 	}

@@ -31,7 +31,7 @@ BOOL WINAPI WriteFileFromListBox(
 	DWORD dwWritten, dwLen;
 	HRESULT hr;
 
-	if (hFile == INVALID_HANDLE_VALUE)
+	if (INVALID_HANDLE_VALUE == hFile)
 	{
 		return FALSE;
 	}
@@ -53,9 +53,7 @@ BOOL WINAPI WriteFileFromListBox(
 		WriteFile(hFile, szLF, 2, &dwWritten, NULL);
 	}
 
-	CloseHandle(
-		hFile
-	);
+	CloseHandle(hFile);
 
 	return TRUE;
 }
