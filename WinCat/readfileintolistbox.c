@@ -20,7 +20,13 @@ BOOL WINAPI ReadFileIntoListBox(
 )
 {
 	CONST HANDLE hHeap = GetProcessHeap();
-	HANDLE hFile = CreateFileW(
+	HANDLE hFile;
+	BYTE *bData = NULL, *pData = NULL;
+	LARGE_INTEGER liSize;
+	DWORD dwRead, i, dwCount = 0;
+	BOOL fRead = FALSE;
+
+	hFile = CreateFileW(
 		wszFileName,
 		GENERIC_READ,
 		0,
@@ -29,10 +35,6 @@ BOOL WINAPI ReadFileIntoListBox(
 		FILE_ATTRIBUTE_NORMAL,
 		NULL
 	);
-	BYTE *bData = NULL, *pData = NULL;
-	LARGE_INTEGER liSize;
-	DWORD dwRead, i, dwCount = 0;
-	BOOL fRead = FALSE;
 
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
@@ -43,6 +45,7 @@ BOOL WINAPI ReadFileIntoListBox(
 
 	if (liSize.HighPart > 0 || liSize.LowPart & 0x80000000) // too big
 	{
+		SetLastError(ERROR_FILE_TOO_LARGE);
 		return FALSE;
 	}
 
