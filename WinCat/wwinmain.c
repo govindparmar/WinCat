@@ -26,15 +26,21 @@ INT APIENTRY wWinMain(
 	ZeroMemory(&ncm, sizeof(NONCLIENTMETRICSW));
 	ncm.cbSize = sizeof(NONCLIENTMETRICSW);
 
-	if (SystemParametersInfoW(SPI_GETNONCLIENTMETRICS, ncm.cbSize, &ncm, 0) == FALSE)
+	if (
+		SystemParametersInfoW(
+			SPI_GETNONCLIENTMETRICS,
+			ncm.cbSize, 
+			&ncm, 
+			0
+	) == FALSE)
 	{
 		dwError = GetLastError();
 		ReportError(dwError, FALSE);
 	}
 
 	hfDefault = CreateFontIndirectW(&ncm.lfMessageFont);
-
-	if (RegisterWCEX(hInstance) == (ATOM)0)
+	
+	if ((ATOM)0 == RegisterWCEX(hInstance))
 	{
 		dwError = GetLastError();
 		ReportError(dwError, FALSE);

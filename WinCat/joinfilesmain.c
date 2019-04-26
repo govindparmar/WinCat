@@ -61,10 +61,12 @@ BOOL WINAPI JoinFilesMain(
 	{
 		lpResult = SendMessageW(hListBox, LB_GETTEXT, i++, (LPARAM)wszInFile);
 		wszInFile[259] = L'\0';
+
 		if (LB_ERR == lpResult)
 		{
 			break;
 		}
+		
 		hIN = CreateFileW(
 			wszInFile,
 			GENERIC_READ, 
@@ -82,9 +84,10 @@ BOOL WINAPI JoinFilesMain(
 			(VOID) MessageBoxW(0, wMsg, L"WinCat", MB_OK | MB_ICONWARNING);
 			return FALSE;
 		}
+		
 		do
 		{
-			SetFilePointer(hFile, 0, NULL, FILE_END);
+			(VOID) SetFilePointer(hFile, 0, NULL, FILE_END);
 			fRead = ReadFile(hIN, bData, cbCopyTime, &dwRead, NULL);
 			if (fRead)
 			{
@@ -92,6 +95,7 @@ BOOL WINAPI JoinFilesMain(
 			}
 		}
 		while (dwRead != 0);
+		
 		(VOID) CloseHandle(hIN);
 	}
 

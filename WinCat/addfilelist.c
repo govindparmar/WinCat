@@ -22,8 +22,14 @@ BOOL WINAPI AddFileList(
 	OPENFILENAMEW ofn;
 	WCHAR wszFileName[MAX_PATH], *p;
 
-	ZeroMemory(&ofn, sizeof(OPENFILENAMEW));
-	ZeroMemory(wszFileName, MAX_PATH * sizeof(WCHAR));
+	ZeroMemory(
+		&ofn,
+		sizeof(OPENFILENAMEW)
+	);
+	ZeroMemory(
+		wszFileName,
+		MAX_PATH * sizeof(WCHAR)
+	);
 
 	p = &wszFileName[0];
 

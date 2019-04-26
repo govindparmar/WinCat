@@ -57,7 +57,12 @@ VOID WINAPI OnCommand(
 		}
 		break;
 	case ID_FILE_EXIT:
-		(VOID) SendMessageW(hWnd, WM_CLOSE, 0, 0);
+		(VOID) SendMessageW(
+			hWnd, 
+			WM_CLOSE,
+			0, 
+			0
+		);
 		break;
 	case ID_EDIT_ADDITEM:
 		if (!AddFileList(hWnd, hLbxEntries))

@@ -30,10 +30,20 @@ BOOL WINAPI OnCreate(
 		return FALSE;
 	}
 	
-	hLbxEntries = CreateWindowExW(WS_EX_OVERLAPPEDWINDOW, L"ListBox", L"", 
+	hLbxEntries = CreateWindowExW(
+		WS_EX_OVERLAPPEDWINDOW, 
+		L"ListBox",
+		L"", 
 		WS_VISIBLE | WS_CHILD | WS_VSCROLL | LBS_DISABLENOSCROLL, 
-		10, 10, 560, 460, 
-		hWnd, NULL, hInstance, NULL);
+		10,
+		10,
+		560,
+		460, 
+		hWnd,
+		NULL,
+		hInstance,
+		NULL
+	);
 	
 	return (hLbxEntries != NULL);
 }

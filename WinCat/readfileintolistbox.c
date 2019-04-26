@@ -43,8 +43,11 @@ BOOL WINAPI ReadFileIntoListBox(
 
 	(VOID) GetFileSizeEx(hFile, &liSize);
 
-	if (liSize.HighPart > 0 || liSize.LowPart & 0x80000000) // too big
+	if (liSize.HighPart > 0 || liSize.LowPart & 0x80000000) 
 	{
+		// If the high-order 32-bits or the MSB of the 
+		// low-order 32-bits are non-zero, the file is 
+		// too large.
 		SetLastError(ERROR_FILE_TOO_LARGE);
 		return FALSE;
 	}
@@ -88,7 +91,7 @@ BOOL WINAPI ReadFileIntoListBox(
 			pData += (++i);
 			i = 0;
 			dwCount--;
-			if (dwCount == 0)
+			if (0 == dwCount)
 			{
 				break;
 			}

@@ -10,5 +10,7 @@ VOID WINAPI OnClose(
 	_In_ HWND hWnd
 )
 {
-	(VOID) DestroyWindow(hWnd);
+	(VOID) DestroyWindow(
+		hWnd
+	);
 }

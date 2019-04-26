@@ -23,8 +23,14 @@ BOOL WINAPI JoinFileList(
 	OPENFILENAMEW ofn;
 	WCHAR wszFileName[MAX_PATH], *p;
 
-	ZeroMemory(&ofn, sizeof(OPENFILENAMEW));
-	ZeroMemory(wszFileName, MAX_PATH * sizeof(WCHAR));
+	ZeroMemory(
+		&ofn, 
+		sizeof(OPENFILENAMEW)
+	);
+	ZeroMemory(
+		wszFileName,
+		MAX_PATH * sizeof(WCHAR)
+	);
 
 	p = &wszFileName[0];
 
@@ -41,7 +47,12 @@ BOOL WINAPI JoinFileList(
 
 	if (GetSaveFileNameW(&ofn))
 	{
-		if (!JoinFilesMain(hListBox, wszFileName))
+		if (
+			!JoinFilesMain(
+				hListBox,
+				wszFileName
+			)
+		)
 		{
 			(VOID) MessageBoxW(
 				NULL, 

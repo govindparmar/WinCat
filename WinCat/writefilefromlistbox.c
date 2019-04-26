@@ -19,17 +19,22 @@ BOOL WINAPI WriteFileFromListBox(
 	_In_ HWND hListBox
 )
 {
-	HANDLE hFile = CreateFileW(
-		wszFileName, 
-		GENERIC_READ | GENERIC_WRITE,
-		0, 	NULL, CREATE_NEW, 
-		FILE_ATTRIBUTE_NORMAL, NULL
-	);
+	HANDLE hFile;
 	CHAR szStr[MAX_PATH];
 	CONST CHAR *szLF = "\r\n";
 	LONG_PTR lpItems, i;
 	DWORD dwWritten, dwLen;
 	HRESULT hr;
+
+	hFile = CreateFileW(
+		wszFileName,
+		GENERIC_READ | GENERIC_WRITE,
+		0,
+		NULL,
+		CREATE_NEW,
+		FILE_ATTRIBUTE_NORMAL,
+		NULL
+	);
 
 	if (INVALID_HANDLE_VALUE == hFile)
 	{

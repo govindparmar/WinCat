@@ -24,8 +24,15 @@ BOOL WINAPI OpenFileList(
 	OPENFILENAMEW ofn;
 	WCHAR lpFileName[MAX_PATH], *p;
 
-	ZeroMemory(&ofn, sizeof(OPENFILENAMEW));
-	ZeroMemory(lpFileName, MAX_PATH * sizeof(WCHAR));
+	ZeroMemory(
+		&ofn, 
+		sizeof(OPENFILENAMEW)
+	);
+
+	ZeroMemory(
+		lpFileName, 
+		MAX_PATH * sizeof(WCHAR)
+	);
 
 	p = &lpFileName[0];
 
@@ -42,7 +49,10 @@ BOOL WINAPI OpenFileList(
 
 	if (GetOpenFileNameW(&ofn))
 	{
-		return ReadFileIntoListBox(lpFileName, hListBox);
+		return ReadFileIntoListBox(
+			lpFileName,
+			hListBox
+		);
 	}
 
 	else

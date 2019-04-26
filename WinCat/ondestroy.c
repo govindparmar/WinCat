@@ -11,5 +11,5 @@ VOID WINAPI OnDestroy(
 )
 {
 	UNREFERENCED_PARAMETER(hWnd);
-	(VOID) PostQuitMessage(0);
+	PostQuitMessage(0);
 }
