@@ -40,9 +40,6 @@ BOOL WINAPI AddFileList(
 	ofn.lpstrFilter = L"All Files (*.*)\0*.*\0\0";
 	ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_ENABLEHOOK | OFN_HIDEREADONLY;
 	ofn.nFilterIndex = 1;
-	ofn.lpstrFileTitle = NULL;
-	ofn.nMaxFileTitle = 0;
-	ofn.lpstrInitialDir = NULL;
 
 	if (GetOpenFileNameW(&ofn))
 	{
