@@ -47,10 +47,18 @@ INT APIENTRY wWinMain(
 	}
 
 	hWnd = CreateWindowExW(
-		WS_EX_OVERLAPPEDWINDOW, g_wszClassName, 
-		L"WinCat by Govind Parmar", WS_VISIBLE | WS_SYSMENU, 
-		100, 100, 600, 530, 
-		NULL, NULL, hInstance, NULL
+		WS_EX_OVERLAPPEDWINDOW, 
+		g_wszClassName, 
+		L"WinCat by Govind Parmar",
+		WS_VISIBLE | WS_SYSMENU, 
+		100,
+		100, 
+		600, 
+		530, 
+		NULL,
+		NULL,
+		hInstance,
+		NULL
 	);
 	if (NULL == hWnd)
 	{

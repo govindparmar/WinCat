@@ -1,6 +1,6 @@
 #include "WC.h"
 
-_Analysis_noreturn_
+_When_(fRecoverable == FALSE, _Analysis_noreturn_)
 
 VOID WINAPI ReportError(
 	_In_ DWORD dwError,
@@ -13,7 +13,10 @@ VOID WINAPI ReportError(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL, 
 		dwError, 
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
+		MAKELANGID(
+			LANG_NEUTRAL,
+			SUBLANG_DEFAULT
+		), 
 		(LPVOID)&lpMsgBuf, 
 		0, 
 		NULL

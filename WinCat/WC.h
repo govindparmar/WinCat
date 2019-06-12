@@ -148,7 +148,7 @@ BOOL WINAPI RemoveFileList(
 	_In_ HWND hListBox
 );
 
-_Analysis_noreturn_
+_When_(fRecoverable == FALSE, _Analysis_noreturn_)
 
 VOID WINAPI ReportError(
 	_In_ DWORD dwError,

@@ -43,7 +43,13 @@ BOOL WINAPI AddFileList(
 
 	if (GetOpenFileNameW(&ofn))
 	{
-		(VOID) SendMessageW(hListBox, LB_ADDSTRING, 0, (LPARAM)wszFileName);
+		(VOID) SendMessageW(
+			hListBox, 
+			LB_ADDSTRING, 
+			0,
+			(LPARAM)wszFileName
+		);
+
 		return TRUE;
 	}
 

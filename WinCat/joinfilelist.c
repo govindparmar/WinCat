@@ -41,9 +41,6 @@ BOOL WINAPI JoinFileList(
 	ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_OVERWRITEPROMPT | OFN_ENABLEHOOK;
 	ofn.lpstrFilter = L"All Files (*.*)\0*.*\0\0";
 	ofn.nFilterIndex = 1;
-	ofn.lpstrFileTitle = NULL;
-	ofn.nMaxFileTitle = 0;
-	ofn.lpstrInitialDir = NULL;
 
 	if (GetSaveFileNameW(&ofn))
 	{

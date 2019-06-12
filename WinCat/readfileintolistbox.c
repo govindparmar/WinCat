@@ -8,6 +8,7 @@
  * RETURNS:
  *  TRUE if successful; FALSE otherwise
  */
+
 _Pre_satisfies_(hListBox != NULL && wszFileName != NULL && wcslen(wszFileName) <= MAX_PATH)
 _Success_(return == TRUE)
 _Ret_range_(FALSE, TRUE)
@@ -36,14 +37,20 @@ BOOL WINAPI ReadFileIntoListBox(
 		NULL
 	);
 
-	if (hFile == INVALID_HANDLE_VALUE)
+	if (INVALID_HANDLE_VALUE == hFile)
 	{
 		return FALSE;
 	}
 
-	(VOID) GetFileSizeEx(hFile, &liSize);
+	(VOID) GetFileSizeEx(
+		hFile,
+		&liSize
+	);
 
-	if (liSize.HighPart > 0 || liSize.LowPart & 0x80000000) 
+	if (
+		liSize.HighPart > 0 ||
+		liSize.LowPart & 0x80000000
+	) 
 	{
 		// If the high-order 32-bits or the MSB of the 
 		// low-order 32-bits are non-zero, the file is 
@@ -52,13 +59,25 @@ BOOL WINAPI ReadFileIntoListBox(
 		return FALSE;
 	}
 
-	bData = (BYTE *)HeapAlloc(hHeap, HEAP_ZERO_MEMORY, liSize.LowPart);
+	bData = (BYTE *)HeapAlloc(
+		hHeap, 
+		HEAP_ZERO_MEMORY,
+		liSize.LowPart
+	);
+
 	if (NULL == bData)
 	{
 		return FALSE;
 	}
 
-	fRead = ReadFile(hFile, bData, liSize.LowPart, &dwRead, NULL);
+	fRead = ReadFile(
+		hFile,
+		bData,
+		liSize.LowPart,
+		&dwRead, 
+		NULL
+	);
+
 	if (FALSE == fRead)
 	{
 		(VOID) MessageBoxW(
@@ -67,7 +86,13 @@ BOOL WINAPI ReadFileIntoListBox(
 			L"Error",
 			MB_OK | MB_ICONSTOP
 		);
-		(VOID) HeapFree(hHeap, 0, bData);
+
+		(VOID) HeapFree(
+			hHeap, 
+			0,
+			bData
+		);
+
 		bData = NULL;
 		return FALSE;
 	}
@@ -87,7 +112,14 @@ BOOL WINAPI ReadFileIntoListBox(
 		if (pData[i] == '\n')
 		{
 			pData[i] = 0;
-			(VOID) SendMessageA(hListBox, LB_ADDSTRING, 0, (LPARAM)pData);
+			
+			(VOID) SendMessageA(
+				hListBox, 
+				LB_ADDSTRING,
+				0,
+				(LPARAM)pData
+			);
+
 			pData += (++i);
 			i = 0;
 			dwCount--;
@@ -98,7 +130,12 @@ BOOL WINAPI ReadFileIntoListBox(
 		}
 	}
 	
-	(VOID) HeapFree(hHeap, 0, bData);
+	(VOID) HeapFree(
+		hHeap,
+		0,
+		bData
+	);
+
 	bData = NULL;
 	pData = NULL;
 	return TRUE;

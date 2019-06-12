@@ -19,7 +19,13 @@ BOOL WINAPI ClearListBox(
 )
 {
 	INT i = 0, nEntries;
-	nEntries = SendMessageW(hListBox, LB_GETCOUNT, 0, 0);
+	
+	nEntries = SendMessageW(
+		hListBox, 
+		LB_GETCOUNT,
+		0,
+		0
+	);
 	
 	if (LB_ERR == nEntries)
 	{
@@ -32,7 +38,13 @@ BOOL WINAPI ClearListBox(
 		//  once an item is removed from the list, 
 		//  the 0-index becomes the next topmost item
 		//  in the list box.
-		(VOID) SendMessageW(hListBox, LB_DELETESTRING, 0, 0);
+		(VOID) SendMessageW(
+			hListBox, 
+			LB_DELETESTRING,
+			0, 
+			0
+		);
+
 		i++;
 	}
 	

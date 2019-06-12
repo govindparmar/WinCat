@@ -34,13 +34,17 @@ BOOL WINAPI SaveFileList(
 	ofn.lpstrDefExt = L"wcl";
 	ofn.lpstrFilter = L"WinCat File Lists (*.wcl)\0*.WCL\0\0";
 	ofn.nFilterIndex = 1;
-	ofn.lpstrFileTitle = NULL;
-	ofn.nMaxFileTitle = 0;
-	ofn.lpstrInitialDir = NULL;
 
-	if (GetSaveFileNameW(&ofn))
+	if (
+		GetSaveFileNameW(
+			&ofn
+		)
+	)
 	{
-		return WriteFileFromListBox(wszFileName, hListBox);
+		return WriteFileFromListBox(
+			wszFileName,
+			hListBox
+		);
 	}
 	else
 	{

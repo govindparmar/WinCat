@@ -18,7 +18,12 @@ VOID WINAPI OnCommand(
 	_In_ UINT uNotify
 )
 {
-	HWND hLbxEntries = FindWindowExW(hWnd, NULL, L"ListBox", NULL);
+	HWND hLbxEntries = FindWindowExW(
+		hWnd,
+		NULL,
+		L"ListBox",
+		NULL
+	);
 	HINSTANCE hInstance = GetModuleHandleW(NULL);
 
 	switch (nID)

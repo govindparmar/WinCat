@@ -43,11 +43,12 @@ BOOL WINAPI OpenFileList(
 	ofn.lpstrFilter = L"WinCat File Lists (*.wcl)\0*.WCL\0All Files (*.*)\0*.*\0\0";
 	ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST | OFN_ENABLEHOOK | OFN_HIDEREADONLY;
 	ofn.nFilterIndex = 1;
-	ofn.lpstrFileTitle = NULL;
-	ofn.nMaxFileTitle = 0;
-	ofn.lpstrInitialDir = NULL;
 
-	if (GetOpenFileNameW(&ofn))
+	if (
+		GetOpenFileNameW(
+			&ofn
+		)
+	)
 	{
 		return ReadFileIntoListBox(
 			lpFileName,
