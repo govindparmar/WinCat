@@ -66,14 +66,32 @@ INT APIENTRY wWinMain(
 		ReportError(dwError, FALSE);
 	}
 
-	(VOID) ShowWindow(hWnd, SW_SHOW);
-	(VOID) EnumChildWindows(hWnd, EnumChildProc, (LPARAM)&hfDefault);
-	(VOID) UpdateWindow(hWnd);
+	(VOID) ShowWindow(
+		hWnd, 
+		SW_SHOW
+	);
+	(VOID) EnumChildWindows(
+		hWnd, 
+		EnumChildProc,
+		(LPARAM)&hfDefault
+	);
+	(VOID) UpdateWindow(
+		hWnd
+	);
 
-	while (GetMessageW(&Msg, NULL, 0, 0) > 0)
+	while (GetMessageW(
+		&Msg,
+		NULL, 
+		0,
+		0
+	) > 0)
 	{
-		(VOID) TranslateMessage(&Msg);
-		(VOID) DispatchMessageW(&Msg);
+		(VOID) TranslateMessage(
+			&Msg
+		);
+		(VOID) DispatchMessageW(
+			&Msg
+		);
 	}
 	
 	return (INT) Msg.wParam;
