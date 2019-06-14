@@ -35,125 +35,55 @@ BOOL WINAPI JoinFilesMain(
 
 	ZeroMemory(wszInFile, MAX_PATH * sizeof(WCHAR));
 
-	hFile = CreateFileW(
-		wszOutFile, 
-		GENERIC_READ | GENERIC_WRITE, 
-		0, 
-		NULL, 
-		CREATE_NEW, 
-		FILE_ATTRIBUTE_NORMAL, 
-		NULL
-	);
-
+	hFile = CreateFileW(wszOutFile, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
 		return FALSE;
 	}
 
-	bData = (BYTE *)HeapAlloc(
-		hHeap, 
-		HEAP_ZERO_MEMORY,
-		cbCopyTime
-	);
-
+	bData = (BYTE *)HeapAlloc(hHeap, HEAP_ZERO_MEMORY, cbCopyTime);
 	if (NULL == bData)
 	{
-		(VOID) MessageBoxW(
-			NULL,
-			L"Out of memory",
-			L"Error",
-			MB_OK | MB_ICONSTOP
-		);
-
-		ExitProcess(ERROR_OUTOFMEMORY);
+		MessageBoxW(NULL, L"Out of memory", L"Error", MB_OK | MB_ICONSTOP);
+		ReportError(ERROR_OUTOFMEMORY, TRUE);
 	}
 
 	while (TRUE)
 	{
-		lpResult = SendMessageW(
-			hListBox,
-			LB_GETTEXT, 
-			i++,
-			(LPARAM)wszInFile
-		);
-
-		wszInFile[259] = L'\0';
+		lpResult = SendMessageW(hListBox, LB_GETTEXT, i++, (LPARAM)wszInFile);
+		wszInFile[MAX_PATH - 1] = L'\0';
 
 		if (LB_ERR == lpResult)
 		{
 			break;
 		}
 		
-		hIN = CreateFileW(
-			wszInFile,
-			GENERIC_READ, 
-			0, 
-			NULL,
-			OPEN_EXISTING,
-			FILE_ATTRIBUTE_NORMAL,
-			NULL
-		);
-		
+		hIN = CreateFileW(wszInFile, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 		if (hIN == INVALID_HANDLE_VALUE)
 		{
 			WCHAR wMsg[512];
-			
-			(VOID) StringCchPrintfW(
-				wMsg,
-				512, 
-				L"Unable to open the file: %s.\n",
-				wszInFile
-			);
-			
-			(VOID) MessageBoxW(
-				NULL,
-				wMsg,
-				L"WinCat",
-				MB_OK | MB_ICONWARNING
-			);
 
+			StringCchPrintfW(wMsg, 512, L"Unable to open the file: %s.\n", wszInFile);
+			MessageBoxW(NULL, wMsg, L"WinCat", MB_OK | MB_ICONWARNING);
 			return FALSE;
 		}
 		
 		do
 		{
-			(VOID) SetFilePointer(
-				hFile,
-				0,
-				NULL,
-				FILE_END
-			);
-			
-			fRead = ReadFile(
-				hIN, 
-				bData, 
-				cbCopyTime, 
-				&dwRead,
-				NULL
-			);
-
-			if (fRead)
+			SetFilePointer(hFile, 0, NULL, FILE_END);
+			fRead = ReadFile(hIN, bData, cbCopyTime, &dwRead, NULL);
+			if (fRead != FALSE)
 			{
-				(VOID) WriteFile(
-					hFile,
-					bData,
-					dwRead,
-					&dwWritten,
-					NULL
-				);
+				WriteFile(hFile, bData,	dwRead,	&dwWritten,	NULL);
 			}
 		}
 		while (dwRead != 0);
 		
-		(VOID) CloseHandle(hIN);
+		CloseHandle(hIN);
 	}
 
-	(VOID) CloseHandle(hFile);
-	(VOID) HeapFree(
-		hHeap,
-		0,
-		bData
-	);
+	CloseHandle(hFile);
+	HeapFree(hHeap, 0, bData);
 
 	bData = NULL;
 	

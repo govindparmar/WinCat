@@ -5,32 +5,8 @@ VOID WINAPI OnPaint(
 )
 {
 	PAINTSTRUCT ps;
-	ZeroMemory(&ps, sizeof(PAINTSTRUCT));
-
-	if (
-		!BeginPaint(
-			hWnd,
-			&ps
-		)
-	)
-	{
-		ReportError(
-			ERROR_INVALID_HANDLE, 
-			TRUE
-		);
-	}
-	if (
-		!EndPaint(
-			hWnd,
-			&ps
-		)
-	)
-	{
-		ReportError(
-			ERROR_INVALID_HANDLE,
-			TRUE
-		);
-	}
-
+	
+	BeginPaint(hWnd, &ps);
+	EndPaint(hWnd, &ps);
 	return;
 }

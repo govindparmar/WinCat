@@ -1,5 +1,3 @@
-// WinCat: concatenate multiple files together
-// Developed by Govind Parmar
 #pragma once
 #include <Windows.h>
 #include <windowsx.h>

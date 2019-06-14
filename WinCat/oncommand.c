@@ -18,97 +18,52 @@ VOID WINAPI OnCommand(
 	_In_ UINT uNotify
 )
 {
-	HWND hLbxEntries = FindWindowExW(
-		hWnd,
-		NULL,
-		L"ListBox",
-		NULL
-	);
-	HINSTANCE hInstance = GetModuleHandleW(NULL);
+	CONST HINSTANCE hInstance = GetModuleHandleW(NULL);
+	HWND hLbxEntries = FindWindowExW(hWnd, NULL, L"ListBox", NULL);
 
 	switch (nID)
 	{
 	case ID_FILE_NEW:
-		if (!ClearListBox(hLbxEntries))
+		if (FALSE == ClearListBox(hLbxEntries))
 		{
-			(VOID) MessageBoxW(
-				NULL,
-				L"Unable to clear the list box.",
-				L"Error",
-				MB_OK | MB_ICONSTOP
-			);
+			MessageBoxW(NULL, L"Unable to clear the list box.", L"Error", MB_OK | MB_ICONSTOP);
 		}
 		break;
 	case ID_FILE_OPEN:
-		if (!OpenFileList(hWnd, hLbxEntries))
+		if (FALSE == OpenFileList(hWnd, hLbxEntries))
 		{
-			(VOID) MessageBoxW(
-				NULL,
-				L"Could not open the specified file.",
-				L"Error",
-				MB_OK | MB_ICONSTOP
-			);
+			MessageBoxW(NULL, L"Could not open the specified file.", L"Error", MB_OK | MB_ICONSTOP);
 		}
 		break;
 	case ID_FILE_SAVE:
-		if (!SaveFileList(hWnd, hLbxEntries))
+		if (FALSE == SaveFileList(hWnd, hLbxEntries))
 		{
-			(VOID) MessageBoxW(
-				NULL,
-				L"Unable to save the current list.",
-				L"Error",
-				MB_OK | MB_ICONSTOP
-			);
+			MessageBoxW(NULL, L"Unable to save the current list.", L"Error", MB_OK | MB_ICONSTOP);
 		}
 		break;
 	case ID_FILE_EXIT:
-		(VOID) SendMessageW(
-			hWnd, 
-			WM_CLOSE,
-			0, 
-			0
-		);
+		SendMessageW(hWnd, WM_CLOSE, 0, 0);
 		break;
 	case ID_EDIT_ADDITEM:
-		if (!AddFileList(hWnd, hLbxEntries))
+		if (FALSE == AddFileList(hWnd, hLbxEntries))
 		{
-			(VOID) MessageBoxW(
-				NULL, 
-				L"Could not add that item to the list.",
-				L"Error",
-				MB_OK | MB_ICONSTOP
-			);
+			MessageBoxW(NULL, L"Could not add that item to the list.", L"Error", MB_OK | MB_ICONSTOP);
 		}
 		break;
 	case ID_EDIT_REMOVEITEM:
-		if (!RemoveFileList(hLbxEntries))
+		if (FALSE == RemoveFileList(hLbxEntries))
 		{
-			(VOID) MessageBoxW(
-				NULL, 
-				L"Please highlight the item you want removed from the list.",
-				L"WinCat",
-				MB_OK | MB_ICONWARNING
-			);
+			MessageBoxW(NULL, L"Please highlight the item you want removed from the list.", L"WinCat", MB_OK | MB_ICONWARNING);
 		}
 		break;
 	case ID_EDIT_JOINITEMS:
-		if (!JoinFileList(hWnd, hLbxEntries))
+		if (FALSE == JoinFileList(hWnd, hLbxEntries))
 		{
-			(VOID) MessageBoxW(
-				NULL, 
-				L"Could not join the files together.", 
-				L"Error",
-				MB_OK | MB_ICONSTOP
-			);
+			MessageBoxW(NULL, L"Could not join the files together.", L"Error", MB_OK | MB_ICONSTOP);
 		}
 		break;
 	case ID_HELP_ABOUT40006:
-		(VOID) DialogBoxW(
-			hInstance, 
-			MAKEINTRESOURCEW(IDD_ABOUT),
-			hWnd, 
-			DialogProc
-		);
+		DialogBoxW(hInstance, MAKEINTRESOURCEW(IDD_ABOUT), hWnd, DialogProc);
 		break;
 	}
 }

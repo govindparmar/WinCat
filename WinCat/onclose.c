@@ -6,11 +6,10 @@
  * PARAMETERS:
  *  hWnd - The window being closed
  */
+
 VOID WINAPI OnClose(
 	_In_ HWND hWnd
 )
 {
-	(VOID) DestroyWindow(
-		hWnd
-	);
+	DestroyWindow(hWnd);
 }

@@ -23,14 +23,8 @@ BOOL WINAPI JoinFileList(
 	OPENFILENAMEW ofn;
 	WCHAR wszFileName[MAX_PATH], *p;
 
-	ZeroMemory(
-		&ofn, 
-		sizeof(OPENFILENAMEW)
-	);
-	ZeroMemory(
-		wszFileName,
-		MAX_PATH * sizeof(WCHAR)
-	);
+	ZeroMemory(&ofn, sizeof(OPENFILENAMEW));
+	ZeroMemory(wszFileName, MAX_PATH * sizeof(WCHAR));
 
 	p = &wszFileName[0];
 
@@ -44,19 +38,9 @@ BOOL WINAPI JoinFileList(
 
 	if (GetSaveFileNameW(&ofn))
 	{
-		if (
-			!JoinFilesMain(
-				hListBox,
-				wszFileName
-			)
-		)
+		if (FALSE == JoinFilesMain(hListBox, wszFileName))
 		{
-			(VOID) MessageBoxW(
-				NULL, 
-				L"At least one file could not be joined.", 
-				L"Warning", 
-				MB_OK | MB_ICONWARNING
-			);
+			MessageBoxW(NULL, L"At least one file could not be joined.", L"Warning", MB_OK | MB_ICONWARNING);
 		}
 		return TRUE;
 	}

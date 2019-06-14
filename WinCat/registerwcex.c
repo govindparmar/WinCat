@@ -24,23 +24,11 @@ ATOM WINAPI RegisterWCEX(
 	WNDCLASSEXW wcex;
 	ZeroMemory(&wcex, sizeof(WNDCLASSEXW));
 
-	if (NULL == hInstance)
-	{
-		SetLastError(ERROR_BAD_ARGUMENTS);
-		return (ATOM)0;
-	}
-
 	wcex.cbSize = sizeof(WNDCLASSEXW);
 	wcex.hbrBackground = (HBRUSH)COLOR_WINDOW;
-	wcex.hCursor = LoadCursorW(
-		NULL,
-		IDC_ARROW
-	);
+	wcex.hCursor = LoadCursorW(NULL, IDC_ARROW);
 	wcex.hIcon =
-	wcex.hIconSm = LoadIconW(
-		NULL, 
-		IDI_APPLICATION
-	);
+	wcex.hIconSm = LoadIconW(NULL, IDI_APPLICATION);
 	wcex.hInstance = hInstance;
 	wcex.lpfnWndProc = WindowProc;
 	wcex.lpszClassName = g_wszClassName;

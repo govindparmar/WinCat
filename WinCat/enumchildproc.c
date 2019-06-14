@@ -18,13 +18,6 @@ BOOL CALLBACK EnumChildProc(
 )
 {
 	HFONT hfDefault = *(HFONT *)lParam;
-	
-	(VOID) SendMessageW(
-		hWnd, 
-		WM_SETFONT, 
-		(WPARAM)hfDefault, 
-		MAKELPARAM(TRUE, 0)
-	);
-
+	SendMessageW(hWnd, WM_SETFONT, (WPARAM)hfDefault, MAKELPARAM(TRUE, 0));
 	return TRUE;
 }

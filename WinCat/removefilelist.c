@@ -17,24 +17,15 @@ BOOL WINAPI RemoveFileList(
 	_In_ HWND hListBox
 )
 {
-	WPARAM wSel = SendMessageW(
-		hListBox,
-		LB_GETCURSEL,
-		0,
-		0
-	);
+	WPARAM wSel = SendMessageW(hListBox, LB_GETCURSEL, 0, 0);
+
 	if (LB_ERR == wSel) 
 	{
 		return FALSE;
 	}
 	else
 	{
-		(VOID) SendMessageW(
-			hListBox,
-			LB_DELETESTRING, 
-			wSel,
-			0
-		);
+		SendMessageW(hListBox, LB_DELETESTRING, wSel, 0);
 	}
 	return TRUE;
 }

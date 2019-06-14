@@ -26,71 +26,34 @@ BOOL WINAPI WriteFileFromListBox(
 	DWORD dwWritten, dwLen;
 	HRESULT hr;
 
-	hFile = CreateFileW(
-		wszFileName,
-		GENERIC_READ | GENERIC_WRITE,
-		0,
-		NULL,
-		CREATE_NEW,
-		FILE_ATTRIBUTE_NORMAL,
-		NULL
-	);
-
+	hFile = CreateFileW(wszFileName, GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
 		return FALSE;
 	}
 
-	lpItems = SendMessageW(
-		hListBox,
-		LB_GETCOUNT,
-		0,
-		0
-	);
-
+	lpItems = SendMessageW(hListBox, LB_GETCOUNT, 0, 0);
 	for (i = 0; i < lpItems; i++)
 	{
 		// Since the values of the list box are loaded with file paths,
 		// MAX_PATH is the most sensible limit
-		(VOID) SendMessageA(
-			hListBox, 
-			LB_GETTEXT,
-			i,
-			(LPARAM)szStr
-		);
+		SendMessageA(hListBox, LB_GETTEXT, i, (LPARAM)szStr);
 		
 		szStr[MAX_PATH - 1] = '\0';
 		
-		hr = StringCbLengthA(
-			szStr,
-			MAX_PATH,
-			&dwLen
-		);
-		
+		hr = StringCbLengthA(szStr, MAX_PATH, &dwLen);
 		if (FAILED(hr))
 		{
 			// One file in the list had a path > MAX_PATH;
 			// we caught it; keep trying...
 			continue;
 		}
-		(VOID) WriteFile(
-			hFile, 
-			szStr,
-			dwLen,
-			&dwWritten,
-			NULL
-		);
-
-		(VOID) WriteFile(
-			hFile,
-			szLF,
-			2,
-			&dwWritten, 
-			NULL
-		);
+		
+		WriteFile(hFile, szStr, dwLen, &dwWritten, NULL);
+		WriteFile(hFile, szLF, 2, &dwWritten, NULL);
 	}
 
-	(VOID) CloseHandle(hFile);
-
+	CloseHandle(hFile);
+	
 	return TRUE;
 }

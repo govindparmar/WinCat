@@ -9,36 +9,18 @@ VOID WINAPI ReportError(
 {
 	LPWSTR lpMsgBuf = NULL;
 
-	(VOID) FormatMessageW(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-		NULL, 
-		dwError, 
-		MAKELANGID(
-			LANG_NEUTRAL,
-			SUBLANG_DEFAULT
-		), 
-		(LPVOID)&lpMsgBuf, 
-		0, 
-		NULL
-	);
+	FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, dwError, 
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPVOID)&lpMsgBuf, 0, NULL);
 
-	(VOID) MessageBoxW(
-		NULL, 
-		lpMsgBuf, 
-		L"Error",
-		MB_OK | MB_ICONSTOP
-	);
+	MessageBoxW(NULL, lpMsgBuf, L"Error", MB_OK | MB_ICONSTOP);
 	
-	(VOID) LocalFree(
-		(HLOCAL)lpMsgBuf
-	);
-
+	LocalFree((HLOCAL)lpMsgBuf);
 	lpMsgBuf = NULL;
 
 	if (FALSE == fRecoverable)
 	{
-		ExitProcess(
-			dwError
-		);
+		ExitProcess(dwError);
 	}
+
+	return;
 }

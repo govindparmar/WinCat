@@ -27,76 +27,40 @@ BOOL WINAPI ReadFileIntoListBox(
 	DWORD dwRead, i, dwCount = 0;
 	BOOL fRead = FALSE;
 
-	hFile = CreateFileW(
-		wszFileName,
-		GENERIC_READ,
-		0,
-		NULL,
-		OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL,
-		NULL
-	);
-
+	hFile = CreateFileW(wszFileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (INVALID_HANDLE_VALUE == hFile)
 	{
 		return FALSE;
 	}
 
-	(VOID) GetFileSizeEx(
-		hFile,
-		&liSize
-	);
 
-	if (
-		liSize.HighPart > 0 ||
-		liSize.LowPart & 0x80000000
-	) 
+	// If the high-order 32-bits or the MSB of the 
+	// low-order 32-bits are non-zero, the file is 
+	// too large to process:
+	GetFileSizeEx(hFile, &liSize);
+	if (liSize.HighPart > 0 || liSize.LowPart & 0x80000000) 
 	{
-		// If the high-order 32-bits or the MSB of the 
-		// low-order 32-bits are non-zero, the file is 
-		// too large.
 		SetLastError(ERROR_FILE_TOO_LARGE);
 		return FALSE;
 	}
 
-	bData = (BYTE *)HeapAlloc(
-		hHeap, 
-		HEAP_ZERO_MEMORY,
-		liSize.LowPart
-	);
-
+	bData = (BYTE *)HeapAlloc(hHeap, HEAP_ZERO_MEMORY, liSize.LowPart);
 	if (NULL == bData)
 	{
 		return FALSE;
 	}
 
-	fRead = ReadFile(
-		hFile,
-		bData,
-		liSize.LowPart,
-		&dwRead, 
-		NULL
-	);
+	fRead = ReadFile(hFile, bData, liSize.LowPart, &dwRead, NULL);
 
 	if (FALSE == fRead)
 	{
-		(VOID) MessageBoxW(
-			NULL, 
-			L"Unable to read the specified file.", 
-			L"Error",
-			MB_OK | MB_ICONSTOP
-		);
-
-		(VOID) HeapFree(
-			hHeap, 
-			0,
-			bData
-		);
-
+		MessageBoxW(NULL, L"Unable to read the specified file.", L"Error", MB_OK | MB_ICONSTOP);
+		HeapFree(hHeap, 0, bData);
 		bData = NULL;
+
 		return FALSE;
 	}
-	(VOID) CloseHandle(hFile);
+	CloseHandle(hFile);
 
 	pData = bData;
 
@@ -113,16 +77,12 @@ BOOL WINAPI ReadFileIntoListBox(
 		{
 			pData[i] = 0;
 			
-			(VOID) SendMessageA(
-				hListBox, 
-				LB_ADDSTRING,
-				0,
-				(LPARAM)pData
-			);
+			SendMessageA(hListBox, LB_ADDSTRING, 0, (LPARAM)pData);
 
 			pData += (++i);
 			i = 0;
 			dwCount--;
+
 			if (0 == dwCount)
 			{
 				break;
@@ -130,11 +90,7 @@ BOOL WINAPI ReadFileIntoListBox(
 		}
 	}
 	
-	(VOID) HeapFree(
-		hHeap,
-		0,
-		bData
-	);
+	HeapFree(hHeap, 0, bData);
 
 	bData = NULL;
 	pData = NULL;
