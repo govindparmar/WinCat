@@ -5,7 +5,7 @@ VOID WINAPI OnPaint(
 )
 {
 	PAINTSTRUCT ps;
-	
+
 	BeginPaint(hWnd, &ps);
 	EndPaint(hWnd, &ps);
 	return;
