@@ -45,7 +45,7 @@ BOOL WINAPI JoinFilesMain(
 	if (NULL == bData)
 	{
 		MessageBoxW(NULL, L"Out of memory", L"Error", MB_OK | MB_ICONSTOP);
-		ReportError(ERROR_OUTOFMEMORY, TRUE);
+		ReportError(ERROR_OUTOFMEMORY, FALSE);
 	}
 
 	while (TRUE)
